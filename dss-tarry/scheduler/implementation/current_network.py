@@ -3,7 +3,8 @@ from pprint import pprint
 from typing import List, Dict
 
 from scheduler.abstract.abstract_network import AbstractNetwork
-from scheduler.implementation.tarry_node import TarryNode
+from scheduler.implementation.echo_node import EchoNode
+# from scheduler.implementation.tree_node import TreeNode
 
 
 class CurrentNetwork(AbstractNetwork):
@@ -12,9 +13,13 @@ class CurrentNetwork(AbstractNetwork):
     def __init__(self) -> None:
         self.nodes = []
         ids = [uuid.uuid4() for _ in range(self.NUMBER_OF_NODES)]
+
         self.__get_edges(ids)
+
         for node_id in ids:
-            self.nodes.append(TarryNode(node_id, self.edges[node_id]))
+            self.nodes.append(EchoNode(node_id, self.edges[node_id]))
+            # self.nodes.append(TreeNode(node_id, self.edges[node_id]))
+
         super().__init__(self.nodes)
 
     def __get_edges(self, ids: List[uuid.UUID]) -> Dict[uuid.UUID, List[uuid.UUID]]:
@@ -28,5 +33,9 @@ class CurrentNetwork(AbstractNetwork):
             ids[6]: [ids[2]],
             ids[7]: [ids[2]]
         }
+
+        print("\n===== GRAPH =====")
         pprint(self.edges)
+        print("=================\n")
+
         return self.edges

@@ -3,7 +3,7 @@ from pprint import pprint
 from typing import List, Dict
 
 from scheduler.abstract.abstract_network import AbstractNetwork
-from scheduler.implementation.lai_yang_node import LaiYangNode
+from scheduler.implementation.echo_extinction_node import EchoExtinctionNode
 
 
 class CurrentNetwork(AbstractNetwork):
@@ -16,11 +16,12 @@ class CurrentNetwork(AbstractNetwork):
         self.__get_edges(ids)
 
         for node_id in ids:
-            self.nodes.append(LaiYangNode(node_id, self.edges[node_id]))
+            self.nodes.append(EchoExtinctionNode(node_id, self.edges[node_id]))
 
         super().__init__(self.nodes)
 
     def __get_edges(self, ids: List[uuid.UUID]) -> Dict[uuid.UUID, List[uuid.UUID]]:
+
         self.edges = {
             ids[0]: [ids[1], ids[2]],
             ids[1]: [ids[0], ids[3], ids[4]],
